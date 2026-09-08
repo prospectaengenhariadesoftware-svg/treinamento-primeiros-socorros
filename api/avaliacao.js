@@ -94,6 +94,16 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ avaliacoes: data || [], configuracao });
     }
 
+    if (req.method === 'DELETE') {
+      const adminError = checkAdmin(req);
+      if (adminError) return res.status(401).json({ error: adminError });
+      const id = String((req.body || {}).id || '').trim();
+      if (!id) return res.status(400).json({ error: 'ID da avaliação não informado' });
+      const { error } = await supabase.from('avaliacoes_primeiros_socorros').delete().eq('id', id);
+      if (error) throw error;
+      return res.status(200).json({ ok: true });
+    }
+
     if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido' });
 
     const nome = String((req.body || {}).nome || '').trim();
