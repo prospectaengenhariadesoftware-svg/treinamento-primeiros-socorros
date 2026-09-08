@@ -16,8 +16,10 @@ Links depois do deploy:
 
 Configure em Project Settings > Environment Variables:
 
-- `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_URL` ou `NEXT_PUBLIC_SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY` preferencialmente
 - `ADMIN_PIN`
+
+A integração Vercel/Supabase às vezes cria `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` em vez dos nomes acima. A API aceita esses nomes para cadastro, mas a página `/admin.html` precisa de `SUPABASE_SERVICE_ROLE_KEY` para listar os participantes com segurança.
 
 Não exponha a service role key em página pública.

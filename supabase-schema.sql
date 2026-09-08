@@ -11,6 +11,12 @@ create table if not exists public.presencas_primeiros_socorros (
 
 alter table public.presencas_primeiros_socorros enable row level security;
 
--- A API da Vercel usa SUPABASE_SERVICE_ROLE_KEY no servidor.
--- Por isso não é necessário liberar insert/select público via anon key.
--- Mantenha sem policies públicas para proteger CPF e assinaturas.
+-- A API da Vercel deve usar SUPABASE_SERVICE_ROLE_KEY no servidor para cadastrar e listar.
+-- Se a integração Vercel/Supabase fornecer apenas anon key, esta policy permite somente cadastro público.
+-- Não há policy de SELECT público: CPF e assinaturas continuam protegidos contra leitura anônima.
+drop policy if exists "Permitir cadastro publico de presenca" on public.presencas_primeiros_socorros;
+create policy "Permitir cadastro publico de presenca"
+  on public.presencas_primeiros_socorros
+  for insert
+  to anon
+  with check (true);
