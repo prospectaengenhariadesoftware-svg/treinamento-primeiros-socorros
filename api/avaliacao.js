@@ -51,8 +51,17 @@ function cleanAnswers(respostas) {
   return out;
 }
 
+function isMissingTable(error, tableName) {
+  const msg = `${error?.message || ''} ${error?.details || ''}`;
+  return error?.code === '42P01' || error?.code === 'PGRST205' || msg.includes(tableName) || msg.includes('schema cache');
+}
+
 async function loadConfig(supabase) {
-  const { data } = await supabase.from('treinamento_config').select('*').eq('id', true).maybeSingle();
+  const { data, error } = await supabase.from('treinamento_config').select('*').eq('id', true).maybeSingle();
+  if (error) {
+    if (isMissingTable(error, 'treinamento_config')) return {};
+    throw error;
+  }
   return data || {};
 }
 

@@ -22,6 +22,10 @@ Configure em Project Settings > Environment Variables:
 - `ADMIN_PIN`
 - `AVALIACAO_GABARITO` com as 20 respostas separadas por vírgula. Não publique esse valor em páginas públicas.
 
-A integração Vercel/Supabase às vezes cria `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` em vez dos nomes acima. A API aceita esses nomes para cadastro, mas a página `/admin.html` precisa de `SUPABASE_SERVICE_ROLE_KEY` para listar os participantes com segurança.
+A integração Vercel/Supabase às vezes cria `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` em vez dos nomes acima. A API aceita esses nomes para cadastro, mas a página `/admin.html` precisa de `SUPABASE_SERVICE_ROLE_KEY` para listar, excluir e gerenciar participantes com segurança.
+
+Para criar as tabelas administrativas e de avaliação, rode no Supabase o arquivo:
+
+- `supabase-update-avaliacao.sql`
 
 Não exponha a service role key em página pública.

@@ -73,14 +73,8 @@ function cleanConfig(body) {
   };
 }
 
-async function loadConfig(supabase) {
-  const { data, error } = await supabase
-    .from('treinamento_config')
-    .select('*')
-    .eq('id', true)
-    .maybeSingle();
-  if (error && error.code !== '42P01') throw error;
-  return data || {
+function defaultConfig() {
+  return {
     id: true,
     tema: 'Treinamento de Primeiros Socorros',
     instrutor: 'Eng. Armando Luis da Silva Gomes',
@@ -90,6 +84,24 @@ async function loadConfig(supabase) {
     empresa: '',
     observacoes: '',
   };
+}
+
+function isMissingTable(error, tableName) {
+  const msg = `${error?.message || ''} ${error?.details || ''}`;
+  return error?.code === '42P01' || error?.code === 'PGRST205' || msg.includes(tableName) || msg.includes('schema cache');
+}
+
+async function loadConfig(supabase) {
+  const { data, error } = await supabase
+    .from('treinamento_config')
+    .select('*')
+    .eq('id', true)
+    .maybeSingle();
+  if (error) {
+    if (isMissingTable(error, 'treinamento_config')) return defaultConfig();
+    throw error;
+  }
+  return data || defaultConfig();
 }
 
 module.exports = async function handler(req, res) {
