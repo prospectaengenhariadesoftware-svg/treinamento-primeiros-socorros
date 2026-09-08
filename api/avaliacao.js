@@ -23,7 +23,8 @@ function getSupabase() {
 
 function checkAdmin(req) {
   const expected = process.env.ADMIN_PIN;
-  if (expected && req.headers['x-admin-pin'] !== expected) return 'PIN administrativo inválido';
+  if (!expected) return 'ADMIN_PIN não configurado na Vercel';
+  if (req.headers['x-admin-pin'] !== expected) return 'PIN administrativo inválido';
   return null;
 }
 
