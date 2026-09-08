@@ -20,9 +20,9 @@
     .nav{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}
     .nav .wrap{display:flex;gap:8px;overflow:auto;padding:10px 18px} .nav a,.btn{text-decoration:none;border:0;border-radius:12px;padding:10px 13px;font-weight:800;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
     .nav a{color:var(--dark);background:#f3f4f6;white-space:nowrap} .btn{background:var(--red);color:#fff} .btn.secondary{background:#111827} .btn.green{background:var(--green)} .btn.blue{background:var(--blue)} .btn.light{background:#f3f4f6;color:#111827;border:1px solid var(--line)}
-    .slide-stage{display:grid;grid-template-columns:1fr 330px;gap:18px;align-items:start} .slides{position:relative;min-height:520px}
-    .slide{display:none;background:white;border:1px solid var(--line);border-radius:22px;padding:28px;min-height:520px;box-shadow:0 16px 40px rgba(17,24,39,.08)}
-    .slide.active{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);grid-template-rows:auto auto 1fr;column-gap:24px;row-gap:10px;align-items:start}.slide-num{grid-column:1/-1;font-weight:900;color:var(--red);letter-spacing:.08em;margin-bottom:2px}.slide h3{grid-column:1/-1;font-size:clamp(26px,3vw,40px)} .slide ul{grid-column:1;margin:0;padding-left:22px}.slide li{margin:8px 0;font-size:18px}
+    .slide-stage{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}.slides{position:relative;min-height:640px}
+    .slide{display:none;background:white;border:1px solid var(--line);border-radius:24px;padding:30px;min-height:640px;box-shadow:0 18px 46px rgba(17,24,39,.10);overflow:hidden}
+    .slide.active{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(480px,1.18fr);grid-template-rows:auto auto 1fr;column-gap:28px;row-gap:10px;align-items:stretch}.slide-num{grid-column:1/-1;font-weight:900;color:var(--red);letter-spacing:.08em;margin-bottom:0}.slide h3{grid-column:1/-1;font-size:clamp(28px,3.2vw,42px);line-height:1.05}.slide ul{grid-column:1;margin:0;padding-left:22px;align-self:start}.slide li{margin:9px 0;font-size:18px}
     .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px} .progress{height:10px;background:#fee2e2;border-radius:999px;overflow:hidden;margin:14px 0} .bar{height:100%;width:4%;background:var(--red)}
     label{font-weight:800;display:block;margin:10px 0 5px} input{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:12px;font-size:16px;background:white}
     canvas{width:100%;height:150px;border:2px dashed #9ca3af;border-radius:12px;background:#fff;touch-action:none}
@@ -30,8 +30,9 @@
     .status{font-weight:800;margin-top:10px} .small{font-size:13px;color:var(--muted)} .pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#fef3c7;color:#92400e;font-weight:800;font-size:12px}
     .two{display:grid;grid-template-columns:1fr 1fr;gap:16px} .check li{margin:7px 0}
     .print-only{display:none}
-    .figure{grid-column:2;align-self:stretch;margin-top:0;border:1px solid #fecaca;background:#fff7f7;border-radius:18px;padding:12px;display:flex;flex-direction:column;justify-content:center;min-height:330px}.figure svg{width:100%;height:150px;display:block}.figure img{width:100%;height:auto;max-height:340px;object-fit:contain;display:block;border-radius:12px;background:#fff}.fig-title{font-size:12px;font-weight:900;color:#991b1b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-    @media (max-width:900px){.hero,.grid,.slide-stage,.two{grid-template-columns:1fr} .slides,.slide{min-height:auto}.slide.active{grid-template-columns:1fr}.slide ul,.figure{grid-column:1}.figure{min-height:auto;margin-top:8px}.figure img{max-height:none}}
+    .figure{grid-column:2;align-self:stretch;margin-top:0;border:1px solid #fecaca;background:linear-gradient(180deg,#fff7f7,#fff);border-radius:22px;padding:14px;display:flex;flex-direction:column;justify-content:center;min-height:460px;box-shadow:inset 0 0 0 1px rgba(185,28,28,.04)}.figure svg{width:100%;height:150px;display:block}.figure img{width:100%;height:100%;max-height:470px;object-fit:contain;display:block;border-radius:16px;background:#fff}.fig-title{font-size:12px;font-weight:900;color:#991b1b;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;line-height:1.25}
+    @media (max-width:1100px){.slide-stage{grid-template-columns:1fr}.side-card{display:grid;grid-template-columns:1fr 1fr;gap:12px}.slide.active{grid-template-columns:minmax(280px,.9fr) minmax(380px,1.1fr)}.figure{min-height:380px}.figure img{max-height:390px}}
+    @media (max-width:900px){.hero,.grid,.slide-stage,.two{grid-template-columns:1fr} .slides,.slide{min-height:auto}.slide.active{grid-template-columns:1fr}.slide ul,.figure{grid-column:1}.figure{min-height:auto;margin-top:8px}.figure img{height:auto;max-height:none}.side-card{display:block}}
     @media print{
       body{background:white} header,.nav,.no-print{display:none!important}
       section{padding:0} .card{box-shadow:none;border:0;padding:0}
@@ -324,7 +325,7 @@
         <button class="btn light" onclick="toggleFull()">Tela cheia</button>
       </div>
     </div>
-    <aside class="card no-print">
+    <aside class="card no-print side-card">
       <h3>Controle do instrutor</h3>
       <p class="small">Use setas do teclado para navegar. Home volta ao início; End vai ao final.</p>
       <label>Timer do treinamento</label>
