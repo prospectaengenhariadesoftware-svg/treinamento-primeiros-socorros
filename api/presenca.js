@@ -36,6 +36,14 @@ function getSupabase({ requireService = false } = {}) {
   };
 }
 
+function checkAdmin(req) {
+  const expected = process.env.ADMIN_PIN;
+  if (expected && req.headers['x-admin-pin'] !== expected) {
+    return 'PIN administrativo inválido';
+  }
+  return null;
+}
+
 function sanitizeCpf(cpf) {
   return String(cpf || '').replace(/\D/g, '').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
 }
@@ -51,19 +59,55 @@ function validPayload(body) {
   return [null, { nome, cpf, assinatura }];
 }
 
+function cleanConfig(body) {
+  return {
+    id: true,
+    tema: String(body.tema || 'Treinamento de Primeiros Socorros').trim().slice(0, 180),
+    instrutor: String(body.instrutor || 'Eng. Armando Luis da Silva Gomes').trim().slice(0, 140),
+    data_treinamento: String(body.data_treinamento || '').trim().slice(0, 20) || null,
+    horario: String(body.horario || '').trim().slice(0, 80),
+    local: String(body.local || '').trim().slice(0, 180),
+    empresa: String(body.empresa || '').trim().slice(0, 180),
+    observacoes: String(body.observacoes || '').trim().slice(0, 500),
+    updated_at: new Date().toISOString(),
+  };
+}
+
+async function loadConfig(supabase) {
+  const { data, error } = await supabase
+    .from('treinamento_config')
+    .select('*')
+    .eq('id', true)
+    .maybeSingle();
+  if (error && error.code !== '42P01') throw error;
+  return data || {
+    id: true,
+    tema: 'Treinamento de Primeiros Socorros',
+    instrutor: 'Eng. Armando Luis da Silva Gomes',
+    data_treinamento: null,
+    horario: '',
+    local: '',
+    empresa: '',
+    observacoes: '',
+  };
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   try {
     if (req.method === 'GET') {
-      const expected = process.env.ADMIN_PIN;
-      if (expected && req.headers['x-admin-pin'] !== expected) {
-        return res.status(401).json({ error: 'PIN administrativo inválido' });
-      }
+      const adminError = checkAdmin(req);
+      if (adminError) return res.status(401).json({ error: adminError });
+
       const { client: supabase } = getSupabase({ requireService: true });
-      const { data, error } = await supabase.from('presencas_primeiros_socorros').select('*').order('created_at', { ascending: true });
+      const [{ data: participantes, error }, configuracao] = await Promise.all([
+        supabase.from('presencas_primeiros_socorros').select('*').order('created_at', { ascending: true }),
+        loadConfig(supabase),
+      ]);
       if (error) throw error;
-      return res.status(200).json(data || []);
+      return res.status(200).json({ participantes: participantes || [], configuracao });
     }
+
     if (req.method === 'POST') {
       const [err, item] = validPayload(req.body || {});
       if (err) return res.status(400).json({ error: err });
@@ -75,6 +119,34 @@ module.exports = async function handler(req, res) {
       if (result.error) throw result.error;
       return res.status(200).json({ ok: true, participante: keyType === 'service_role' ? result.data : null });
     }
+
+    if (req.method === 'PATCH') {
+      const adminError = checkAdmin(req);
+      if (adminError) return res.status(401).json({ error: adminError });
+
+      const { client: supabase } = getSupabase({ requireService: true });
+      const config = cleanConfig(req.body || {});
+      const { data, error } = await supabase
+        .from('treinamento_config')
+        .upsert(config, { onConflict: 'id' })
+        .select('*')
+        .single();
+      if (error) throw error;
+      return res.status(200).json({ ok: true, configuracao: data });
+    }
+
+    if (req.method === 'DELETE') {
+      const adminError = checkAdmin(req);
+      if (adminError) return res.status(401).json({ error: adminError });
+
+      const id = String((req.body || {}).id || '').trim();
+      if (!id) return res.status(400).json({ error: 'ID do participante não informado' });
+      const { client: supabase } = getSupabase({ requireService: true });
+      const { error } = await supabase.from('presencas_primeiros_socorros').delete().eq('id', id);
+      if (error) throw error;
+      return res.status(200).json({ ok: true });
+    }
+
     return res.status(405).json({ error: 'Método não permitido' });
   } catch (e) {
     return res.status(500).json({ error: e.message || 'Erro interno' });

@@ -4,7 +4,7 @@ Links depois do deploy:
 
 - `/treinamento.html` — página do instrutor com slides.
 - `/presenca.html` — link público para participantes preencherem Nome, CPF e Assinatura.
-- `/admin.html` — página administrativa para ver lista, baixar CSV/JSON e gerar PDF.
+- `/admin.html` — página administrativa para ver lista, excluir participante, configurar data/horário/local e gerar PDF.
 
 ## Supabase
 
