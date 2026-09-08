@@ -83,12 +83,15 @@ module.exports = async function handler(req, res) {
     if (req.method === 'GET') {
       const adminError = checkAdmin(req);
       if (adminError) return res.status(401).json({ error: adminError });
-      const { data, error } = await supabase
-        .from('avaliacoes_primeiros_socorros')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const [{ data, error }, configuracao] = await Promise.all([
+        supabase
+          .from('avaliacoes_primeiros_socorros')
+          .select('*')
+          .order('created_at', { ascending: false }),
+        loadConfig(supabase),
+      ]);
       if (error) throw error;
-      return res.status(200).json(data || []);
+      return res.status(200).json({ avaliacoes: data || [], configuracao });
     }
 
     if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido' });
@@ -144,7 +147,12 @@ module.exports = async function handler(req, res) {
         nome,
         cpf,
         tema: config.tema || 'Treinamento de Primeiros Socorros — Nível 1',
+        local: config.local || '',
+        empresa: config.empresa || '',
         data: config.data_treinamento ? new Date(config.data_treinamento + 'T00:00:00').toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR'),
+        percentual,
+        aproveitamento: `${Math.round(percentual)}%`,
+        emitido_em: data.created_at ? new Date(data.created_at).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR'),
         registro: data.id,
       } : null,
     });
