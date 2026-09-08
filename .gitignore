@@ -6,3 +6,5 @@ node_modules/
 presencas-primeiros-socorros.json
 *.log
 .DS_Store
+
+extracao-avaliacao/

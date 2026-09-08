@@ -1,0 +1,202 @@
+[
+  {
+    "n": 1,
+    "texto": "Qual a frequência de compressões torácicas recomendada para adulto?",
+    "alternativas": {
+      "A": "60 a 80 por minuto",
+      "B": "100 a 120 por minuto",
+      "C": "140 a 160 por minuto",
+      "D": "Não existe frequência definida"
+    }
+  },
+  {
+    "n": 2,
+    "texto": "Qual a profundidade recomendada da compressão torácica no adulto médio?",
+    "alternativas": {
+      "A": "2 a 3 cm",
+      "B": "3 a 4 cm",
+      "C": "5 a 6 cm",
+      "D": "7 a 8 cm"
+    }
+  },
+  {
+    "n": 3,
+    "texto": "A vítima está inconsciente e apresenta respirações agônicas, espaçadas e ruidosas (gasping). A conduta correta é:",
+    "alternativas": {
+      "A": "Aguardar a respiração normalizar",
+      "B": "Tratar como parada cardiorrespiratória e iniciar RCP",
+      "C": "Oferecer água e observar",
+      "D": "Colocar em posição lateral e esperar o SAMU"
+    }
+  },
+  {
+    "n": 4,
+    "texto": "Qual a relação entre compressões e ventilações na RCP convencional em adulto?",
+    "alternativas": {
+      "A": "15:2",
+      "B": "30:2",
+      "C": "5:1",
+      "D": "10:2"
+    }
+  },
+  {
+    "n": 5,
+    "texto": "Segundo a atualização AHA 2025, a sequência para adulto consciente com obstrução GRAVE de vias aéreas é:",
+    "alternativas": {
+      "A": "Somente compressões abdominais até desobstruir",
+      "B": "Somente golpes nas costas",
+      "C": "5 golpes nas costas + 5 compressões abdominais, em ciclos",
+      "D": "Varredura digital seguida de ventilação"
+    }
+  },
+  {
+    "n": 6,
+    "texto": "Em obstrução LEVE de vias aéreas, com tosse forte e eficaz, a conduta é:",
+    "alternativas": {
+      "A": "Aplicar imediatamente 5 compressões abdominais",
+      "B": "Incentivar a tosse e observar",
+      "C": "Deitar a vítima e iniciar RCP",
+      "D": "Introduzir os dedos para retirar o objeto"
+    }
+  },
+  {
+    "n": 7,
+    "texto": "Qual é a primeira medida no controle de uma hemorragia externa grave?",
+    "alternativas": {
+      "A": "Aplicar torniquete",
+      "B": "Elevar o membro",
+      "C": "Pressão manual direta sobre o ponto de sangramento",
+      "D": "Aplicar gelo"
+    }
+  },
+  {
+    "n": 8,
+    "texto": "O torniquete está indicado quando:",
+    "alternativas": {
+      "A": "Qualquer sangramento em membro",
+      "B": "Hemorragia grave de membro não controlada adequadamente pela pressão direta",
+      "C": "Sangramento nasal persistente",
+      "D": "Ferimento abdominal com sangramento"
+    }
+  },
+  {
+    "n": 9,
+    "texto": "Após aplicar o torniquete, a conduta correta é:",
+    "alternativas": {
+      "A": "Afrouxar a cada 10 minutos",
+      "B": "Registrar o horário e não afrouxar periodicamente",
+      "C": "Retirar assim que o sangramento diminuir",
+      "D": "Cobrir o torniquete para a vítima não ver"
+    }
+  },
+  {
+    "n": 10,
+    "texto": "Qual é a PRIMEIRA ação diante de um acidente elétrico com vítima caída junto ao quadro?",
+    "alternativas": {
+      "A": "Puxar a vítima pelo braço para longe",
+      "B": "Iniciar RCP imediatamente",
+      "C": "Controlar/desenergizar a fonte e confirmar cena segura",
+      "D": "Jogar água para resfriar"
+    }
+  },
+  {
+    "n": 11,
+    "texto": "Sobre o uso de objetos improvisados (madeira, cabo de vassoura) para afastar a vítima em alta tensão:",
+    "alternativas": {
+      "A": "É a técnica recomendada",
+      "B": "Pode ser usado se estiver seco",
+      "C": "Não deve ser feito — aguardar equipe competente tornar a área segura",
+      "D": "Só é permitido com luva de raspa"
+    }
+  },
+  {
+    "n": 12,
+    "texto": "Quais são os quatro elementos do FAST?",
+    "alternativas": {
+      "A": "Força, Amplitude, Sensação, Tempo",
+      "B": "Face, Arms, Speech, Time",
+      "C": "Ferida, Ar, Sangue, Trauma",
+      "D": "Frequência, Amplitude, Saturação, Temperatura"
+    }
+  },
+  {
+    "n": 13,
+    "texto": "Diante de queimadura térmica, a conduta correta é:",
+    "alternativas": {
+      "A": "Passar pasta de dente ou manteiga",
+      "B": "Furar as bolhas para aliviar a pressão",
+      "C": "Resfriar com água corrente limpa por 5 a 20 minutos",
+      "D": "Aplicar gelo diretamente sobre a lesão"
+    }
+  },
+  {
+    "n": 14,
+    "texto": "Durante uma convulsão, o socorrista deve:",
+    "alternativas": {
+      "A": "Segurar firme os braços e pernas para conter os movimentos",
+      "B": "Colocar um objeto na boca para proteger a língua",
+      "C": "Afastar objetos, proteger a cabeça e marcar o tempo",
+      "D": "Oferecer água assim que os movimentos começarem"
+    }
+  },
+  {
+    "n": 15,
+    "texto": "Sobre o DEA, é correto afirmar:",
+    "alternativas": {
+      "A": "Só pode ser operado por profissional de saúde",
+      "B": "Aplica choque em qualquer vítima inconsciente",
+      "C": "Analisa o ritmo e só indica choque quando apropriado; deve ser usado sem demora",
+      "D": "Deve ser usado somente após 10 minutos de RCP"
+    }
+  },
+  {
+    "n": 16,
+    "texto": "Após o choque do DEA (ou a mensagem “choque não indicado”), o socorrista deve:",
+    "alternativas": {
+      "A": "Aguardar 1 minuto e reavaliar o pulso",
+      "B": "Reiniciar as compressões imediatamente",
+      "C": "Retirar as pás e transportar a vítima",
+      "D": "Ventilar 5 vezes antes de comprimir"
+    }
+  },
+  {
+    "n": 17,
+    "texto": "Vítima consciente com hipoglicemia, acordada e capaz de engolir. A conduta é:",
+    "alternativas": {
+      "A": "Nada pela boca e aguardar o SAMU",
+      "B": "Oferecer glicose oral / açúcar simples conforme protocolo",
+      "C": "Deitar e elevar as pernas",
+      "D": "Oferecer água gelada apenas"
+    }
+  },
+  {
+    "n": 18,
+    "texto": "A posição lateral de segurança está indicada para:",
+    "alternativas": {
+      "A": "Vítima em parada cardiorrespiratória",
+      "B": "Vítima com consciência reduzida e respiração normal, sem suspeita importante de lesão de coluna",
+      "C": "Vítima com suspeita de fratura de pelve",
+      "D": "Vítima com hemorragia grave de membro"
+    }
+  },
+  {
+    "n": 19,
+    "texto": "Golpe de calor com alteração do estado mental deve ser tratado como:",
+    "alternativas": {
+      "A": "Quadro leve, apenas hidratar",
+      "B": "Emergência: acionar 192 e iniciar resfriamento ativo imediato",
+      "C": "Situação que só exige repouso à sombra",
+      "D": "Caso de encaminhamento ao ambulatório no dia seguinte"
+    }
+  },
+  {
+    "n": 20,
+    "texto": "Diante de suspeita de lesão de coluna após queda, com a cena segura, a conduta é:",
+    "alternativas": {
+      "A": "Sentar a vítima para facilitar a respiração",
+      "B": "Pedir que ela caminhe até a ambulância",
+      "C": "Manter na posição encontrada, evitando movimentos desnecessários",
+      "D": "Virar imediatamente de bruços"
+    }
+  }
+]

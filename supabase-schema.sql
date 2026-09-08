@@ -22,12 +22,29 @@ create table if not exists public.treinamento_config (
   constraint treinamento_config_singleton check (id = true)
 );
 
+create table if not exists public.avaliacoes_primeiros_socorros (
+  id uuid primary key default gen_random_uuid(),
+  nome text not null,
+  cpf text not null,
+  tentativa integer not null check (tentativa between 1 and 3),
+  respostas jsonb not null,
+  acertos integer not null,
+  total integer not null default 20,
+  percentual numeric(5,2) not null,
+  aprovado boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists avaliacoes_primeiros_socorros_cpf_idx
+  on public.avaliacoes_primeiros_socorros (cpf, tentativa);
+
 insert into public.treinamento_config (id)
 values (true)
 on conflict (id) do nothing;
 
 alter table public.presencas_primeiros_socorros enable row level security;
 alter table public.treinamento_config enable row level security;
+alter table public.avaliacoes_primeiros_socorros enable row level security;
 
 -- A API da Vercel deve usar SUPABASE_SERVICE_ROLE_KEY no servidor para listar,
 -- excluir participantes e salvar a configuração do treinamento.

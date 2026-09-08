@@ -55,8 +55,17 @@
     <div class="table-wrap"><table id="tabela"><thead><tr><th>#</th><th>Nome</th><th>CPF</th><th>Assinatura digital</th><th>Assinatura presencial</th><th>Data/Hora cadastro</th><th class="actions-col">Ações</th></tr></thead><tbody></tbody></table></div>
     <div class="print-head pdf-foot"><div class="line-sign">Responsável pelo treinamento</div><div class="line-sign">Responsável da empresa / unidade</div></div>
   </section>
+
+  <section class="card no-print">
+    <h2>Avaliações de aprendizagem</h2>
+    <p class="muted">Resultados por tentativa. O gabarito não é exibido no painel público nem aos participantes.</p>
+    <div class="controls"><button class="btn blue" onclick="carregarAvaliacoes()">Carregar avaliações</button><a class="btn light" href="/avaliacao.html" target="_blank">Abrir página da avaliação</a><span class="pill"><strong id="evalCount">0</strong> avaliação(ões)</span></div>
+    <div class="status" id="evalStatus"></div>
+    <div class="table-wrap" style="margin-top:12px"><table id="evalTabela"><thead><tr><th>Nome</th><th>CPF</th><th>Tentativa</th><th>Acertos</th><th>%</th><th>Resultado</th><th>Data/Hora</th></tr></thead><tbody></tbody></table></div>
+  </section>
 </main>
 <script>
+const API_AVALIACAO='/api/avaliacao';
 const API='/api/presenca';let participantes=[];let configuracao={};
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function getPin(){const el=document.getElementById('pin');return (el.value||localStorage.getItem('admin_pin')||'').trim()}
@@ -71,6 +80,7 @@ async function carregar(){const pin=getPin();if(pin)localStorage.setItem('admin_
 async function salvarConfig(){const pin=getPin();try{const r=await fetch(API,{method:'PATCH',headers:{'Content-Type':'application/json','x-admin-pin':pin},body:JSON.stringify(formConfig())});const out=await r.json();if(!r.ok)throw new Error(out.error||'erro');fillConfig(out.configuracao);setStatus('configStatus','Dados do treinamento salvos.','ok')}catch(e){setStatus('configStatus','Falha ao salvar: '+e.message,'err')}}
 async function excluirParticipante(id,nome){if(!confirm(`Excluir participante?\n\n${nome}`))return;const pin=getPin();try{const r=await fetch(API,{method:'DELETE',headers:{'Content-Type':'application/json','x-admin-pin':pin},body:JSON.stringify({id})});const out=await r.json();if(!r.ok)throw new Error(out.error||'erro');participantes=participantes.filter(p=>p.id!==id);render();setStatus('status','Participante excluído.','ok')}catch(e){setStatus('status','Falha ao excluir: '+e.message,'err')}}
 function render(){document.getElementById('count').textContent=participantes.length;document.querySelector('#tabela tbody').innerHTML=participantes.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.nome)}</td><td>${esc(p.cpf)}</td><td class="assinatura-cell">${p.assinatura?'<img class="sig" src="'+p.assinatura+'">':''}</td><td class="assinatura-cell"></td><td>${esc(p.created_at?new Date(p.created_at).toLocaleString('pt-BR'):'')}</td><td class="actions-cell"><button class="btn danger" onclick="excluirParticipante('${esc(p.id)}','${esc(p.nome).replaceAll('&#039;','\\&#039;')}')">Excluir</button></td></tr>`).join('')}
+async function carregarAvaliacoes(){const pin=getPin();try{const r=await fetch(API_AVALIACAO,{headers:{'x-admin-pin':pin}});const out=await r.json();if(!r.ok)throw new Error(out.error||'erro');document.getElementById('evalCount').textContent=out.length;document.querySelector('#evalTabela tbody').innerHTML=out.map(a=>`<tr><td>${esc(a.nome)}</td><td>${esc(a.cpf)}</td><td>${esc(a.tentativa)} de 3</td><td>${esc(a.acertos)}/${esc(a.total)}</td><td>${Math.round(Number(a.percentual||0))}%</td><td>${a.aprovado?'<strong style="color:var(--green)">Aprovado</strong>':'<strong style="color:var(--red)">Reprovado</strong>'}</td><td>${esc(a.created_at?new Date(a.created_at).toLocaleString('pt-BR'):'')}</td></tr>`).join('');setStatus('evalStatus','Avaliações carregadas.','ok')}catch(e){setStatus('evalStatus','Falha: '+e.message,'err')}}
 function baixarJSON(){download('lista-presenca.json',JSON.stringify({configuracao:formConfig(),participantes},null,2),'application/json')}
 function baixarCSV(){const header='Nome;CPF;DataHora\n';const body=participantes.map(p=>`"${String(p.nome).replaceAll('"','""')}";"${p.cpf}";"${p.created_at||''}"`).join('\n');download('lista-presenca.csv',header+body,'text/csv;charset=utf-8')}
 function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
