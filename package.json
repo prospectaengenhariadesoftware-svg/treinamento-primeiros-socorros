@@ -1,0 +1,15 @@
+{
+  "name": "primeiro-socorro-engenharia",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  }
+}
