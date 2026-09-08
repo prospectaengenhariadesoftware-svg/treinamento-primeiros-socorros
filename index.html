@@ -783,9 +783,9 @@
         <div class="downloads">
           <h3>Materiais educativos</h3>
           <div class="download-list">
-            <div class="download-item"><div><strong>Checklist P.A.R.E.</strong><small>Guia de bolso para emergências</small></div><button class="btn btn-ghost" onclick="window.print()">Imprimir</button></div>
-            <div class="download-item"><div><strong>Mapa de riscos</strong><small>Modelo para obra, laboratório ou oficina</small></div><button class="btn btn-ghost" data-toast="Modelo pronto para personalização.">Ver</button></div>
-            <div class="download-item"><div><strong>Roteiro de simulado</strong><small>Treinamento com papéis e tempos</small></div><button class="btn btn-ghost" data-toast="Adicione cenários reais da sua instituição.">Ver</button></div>
+            <div class="download-item"><div><strong>Checklist P.A.R.E.</strong><small>Guia de bolso para emergências</small></div><button class="btn btn-ghost" onclick="printMaterial('pare')">Imprimir</button></div>
+            <div class="download-item"><div><strong>Mapa de riscos</strong><small>Modelo para obra, laboratório ou oficina</small></div><button class="btn btn-ghost" onclick="openMaterial('mapa')">Ver</button></div>
+            <div class="download-item"><div><strong>Roteiro de simulado</strong><small>Treinamento com papéis e tempos</small></div><button class="btn btn-ghost" onclick="openMaterial('simulado')">Ver</button></div>
           </div>
         </div>
       </div>
@@ -865,6 +865,42 @@
         note: 'Sangramento intenso, perda de sensibilidade ou ferimento profundo exige atendimento imediato.'
       }
     };
+
+
+    const materials = {
+      pare: {
+        title: 'Checklist P.A.R.E.', sub: 'Guia de bolso para emergências',
+        html: `<div class="material-doc"><h3>Checklist P.A.R.E.</h3><p><strong>Objetivo:</strong> orientar a resposta inicial com segurança até a chegada da equipe especializada.</p><div class="dos-donts"><div class="callout good"><h3>P — Proteja a área</h3><ul><li>Isole o local e afaste curiosos.</li><li>Identifique riscos: energia, fogo, máquinas, produtos químicos, queda e tráfego.</li><li>Use EPI e não se torne a próxima vítima.</li></ul></div><div class="callout good"><h3>A — Acione ajuda</h3><ul><li>Ligue 192 SAMU ou 193 Bombeiros.</li><li>Avise brigada, liderança e segurança do trabalho.</li><li>Informe local exato, número de vítimas e riscos presentes.</li></ul></div></div><div class="dos-donts"><div class="callout good"><h3>R — Responda dentro do treinamento</h3><ul><li>Verifique consciência e respiração.</li><li>Controle hemorragias com pressão direta.</li><li>Inicie RCP/DEA se treinado e indicado.</li><li>Não execute procedimentos para os quais não foi capacitado.</li></ul></div><div class="callout good"><h3>E — Entregue informações</h3><ul><li>Horário da ocorrência e do acionamento.</li><li>Riscos envolvidos e medidas tomadas.</li><li>Sintomas, sinais observados e evolução.</li><li>Procedimentos realizados e tempo de torniquete/DEA/RCP.</li></ul></div></div><div class="disclaimer"><strong>Emergência:</strong> 192 SAMU · 193 Bombeiros. Este material é educativo e deve seguir o plano interno da empresa.</div></div>`
+      },
+      mapa: {
+        title: 'Mapa de riscos — primeiros socorros', sub: 'Modelo para obra, laboratório, oficina ou indústria',
+        html: `<div class="material-doc"><h3>Mapa de riscos</h3><p>Use este modelo para levantar os cenários que exigem resposta inicial e recursos de emergência.</p><table style="width:100%;border-collapse:collapse"><thead><tr><th style="border:1px solid #dbe3ec;padding:8px">Área</th><th style="border:1px solid #dbe3ec;padding:8px">Risco principal</th><th style="border:1px solid #dbe3ec;padding:8px">Possível emergência</th><th style="border:1px solid #dbe3ec;padding:8px">Recurso necessário</th><th style="border:1px solid #dbe3ec;padding:8px">Responsável</th></tr></thead><tbody><tr><td style="border:1px solid #dbe3ec;padding:8px">Painéis elétricos</td><td style="border:1px solid #dbe3ec;padding:8px">Choque / arco elétrico</td><td style="border:1px solid #dbe3ec;padding:8px">PCR, queimadura, queda</td><td style="border:1px solid #dbe3ec;padding:8px">Bloqueio, DEA, 192/193</td><td style="border:1px solid #dbe3ec;padding:8px">__________</td></tr><tr><td style="border:1px solid #dbe3ec;padding:8px">Máquinas</td><td style="border:1px solid #dbe3ec;padding:8px">Corte / esmagamento</td><td style="border:1px solid #dbe3ec;padding:8px">Hemorragia, amputação</td><td style="border:1px solid #dbe3ec;padding:8px">Kit trauma, compressas, acionamento</td><td style="border:1px solid #dbe3ec;padding:8px">__________</td></tr><tr><td style="border:1px solid #dbe3ec;padding:8px">Laboratório</td><td style="border:1px solid #dbe3ec;padding:8px">Produto químico</td><td style="border:1px solid #dbe3ec;padding:8px">Queimadura, intoxicação</td><td style="border:1px solid #dbe3ec;padding:8px">FISPQ, chuveiro/lava-olhos</td><td style="border:1px solid #dbe3ec;padding:8px">__________</td></tr><tr><td style="border:1px solid #dbe3ec;padding:8px">Altura</td><td style="border:1px solid #dbe3ec;padding:8px">Queda</td><td style="border:1px solid #dbe3ec;padding:8px">Trauma, coluna, fratura</td><td style="border:1px solid #dbe3ec;padding:8px">Resgate, isolamento, 193</td><td style="border:1px solid #dbe3ec;padding:8px">__________</td></tr></tbody></table><h4>Legenda sugerida</h4><ul><li><strong>Alto:</strong> risco de morte ou incapacidade grave.</li><li><strong>Médio:</strong> exige atendimento rápido e controle local.</li><li><strong>Baixo:</strong> ferimentos leves, monitorados conforme procedimento.</li></ul><button class="btn btn-primary" onclick="printMaterial('mapa')">Imprimir mapa de riscos</button></div>`
+      },
+      simulado: {
+        title: 'Roteiro de simulado', sub: 'Treinamento com papéis, tempos e critérios de observação',
+        html: `<div class="material-doc"><h3>Roteiro de simulado</h3><p><strong>Cenário base:</strong> colaborador sofre acidente durante atividade operacional. A equipe deve proteger a cena, acionar ajuda, prestar resposta inicial e entregar informações.</p><ol><li><strong>0–2 min:</strong> identificar risco, isolar área e impedir aproximação de curiosos.</li><li><strong>2–4 min:</strong> acionar 192/193, brigada e liderança; informar local e condição da vítima.</li><li><strong>4–8 min:</strong> avaliar consciência/respiração, controlar hemorragias, preparar DEA se aplicável.</li><li><strong>8–12 min:</strong> manter monitoramento, registrar horários e aguardar equipe especializada.</li><li><strong>12–15 min:</strong> passagem de caso: o que aconteceu, riscos, sinais, condutas e horários.</li></ol><h4>Papéis</h4><ul><li>Vítima simulada.</li><li>Primeiro respondedor.</li><li>Comunicador/acionamento externo.</li><li>Controle de cena e isolamento.</li><li>Observador do simulado.</li></ul><h4>Critérios de avaliação</h4><ul><li>Não expôs socorrista a risco.</li><li>Acionou ajuda corretamente.</li><li>Aplicou conduta compatível com treinamento.</li><li>Registrou horários e entregou informações objetivas.</li></ul><button class="btn btn-primary" onclick="printMaterial('simulado')">Imprimir roteiro</button></div>`
+      }
+    };
+
+    function openMaterial(key) {
+      const item = materials[key];
+      if (!item) return;
+      modalTitle.textContent = item.title;
+      modalSub.textContent = item.sub;
+      modalBody.innerHTML = item.html;
+      modalBackdrop.classList.add('show');
+    }
+
+    function printMaterial(key) {
+      const item = materials[key];
+      if (!item) return;
+      const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${item.title}</title><style>@page{size:A4;margin:14mm}body{font-family:Arial,sans-serif;color:#102033;line-height:1.45}h1{color:#0b3558;margin-bottom:0}h2,h3{color:#0b3558}.meta{border-bottom:3px solid #f47c20;padding-bottom:12px;margin-bottom:18px}.dos-donts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.callout{border:1px solid #dbe3ec;border-radius:12px;padding:12px;background:#f9fbfd;margin-bottom:12px}.disclaimer{margin-top:18px;border:1px solid #f9b115;background:#fff7db;border-radius:12px;padding:12px;font-weight:700}table{width:100%;border-collapse:collapse;margin:14px 0}th,td{border:1px solid #cbd5e1;padding:8px;text-align:left;vertical-align:top}th{background:#eef3f8}@media(max-width:700px){.dos-donts{grid-template-columns:1fr}}</style></head><body><div class="meta"><h1>${item.title}</h1><div>${item.sub}</div></div>${item.html}</body></html>`;
+      const w = window.open('', '_blank');
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+      setTimeout(() => w.print(), 250);
+    }
 
     const modalBackdrop = document.getElementById('modalBackdrop');
     const modalTitle = document.getElementById('modalTitle');
