@@ -40,12 +40,7 @@ function parseAnswerKey(raw) {
 function answerKey() {
   const fromEnv = parseAnswerKey(process.env.AVALIACAO_GABARITO);
   if (fromEnv) return fromEnv;
-
-  // Fallback server-side para evitar falha operacional se a variável da Vercel
-  // não for carregada. Este arquivo roda apenas na API; o frontend público não
-  // recebe o gabarito.
-  return [66, 67, 66, 66, 67, 66, 67, 66, 66, 67, 67, 66, 67, 67, 67, 66, 66, 66, 66, 67]
-    .map((code) => String.fromCharCode(code));
+  throw new Error('AVALIACAO_GABARITO não configurado ou inválido');
 }
 
 function sanitizeCpf(cpf) {
@@ -79,11 +74,14 @@ async function loadConfig(supabase) {
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   try {
+    if (req.method === 'GET' || req.method === 'DELETE') {
+      const adminError = checkAdmin(req);
+      if (adminError) return res.status(401).json({ error: adminError });
+    }
+
     const supabase = getSupabase();
 
     if (req.method === 'GET') {
-      const adminError = checkAdmin(req);
-      if (adminError) return res.status(401).json({ error: adminError });
       const [{ data, error }, configuracao] = await Promise.all([
         supabase
           .from('avaliacoes_primeiros_socorros')
@@ -96,8 +94,6 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'DELETE') {
-      const adminError = checkAdmin(req);
-      if (adminError) return res.status(401).json({ error: adminError });
       const id = String((req.body || {}).id || '').trim();
       if (!id) return res.status(400).json({ error: 'ID da avaliação não informado' });
       const { error } = await supabase.from('avaliacoes_primeiros_socorros').delete().eq('id', id);

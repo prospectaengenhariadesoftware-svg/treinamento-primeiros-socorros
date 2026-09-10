@@ -28,6 +28,20 @@ Escolha um PIN administrativo para acessar `/admin.html`.
 [ESCOLHER_UM_PIN_SEGURO]
 ```
 
+## AVALIACAO_GABARITO
+
+Configure o gabarito da avaliação somente como variável protegida da Vercel. Use 20 alternativas em sequência ou separadas por vírgula.
+
+```text
+[20_ALTERNATIVAS_REDACTED]
+```
+
+Nunca coloque o gabarito real em HTML, JavaScript público, GitHub público, Telegram ou README.
+
+```text
+[REDACTED]
+```
+
 ## Observação de segurança
 
 A chave service_role tem poder administrativo no Supabase. Se ela foi exposta em chat, gere/rotacione uma nova chave quando possível e substitua na Vercel.

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "vercel dev",
+    "test": "node --test",
     "deploy": "vercel --prod"
   },
   "dependencies": {

@@ -20,7 +20,7 @@ Configure em Project Settings > Environment Variables:
 - `SUPABASE_URL` ou `NEXT_PUBLIC_SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY` preferencialmente
 - `ADMIN_PIN`
-- `AVALIACAO_GABARITO` opcional para sobrescrever o gabarito no servidor. Não publique esse valor em páginas públicas.
+- `AVALIACAO_GABARITO` obrigatório para corrigir a avaliação no servidor. Não publique esse valor em páginas públicas, README, HTML ou JavaScript client-side.
 
 A integração Vercel/Supabase às vezes cria `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` em vez dos nomes acima. A API aceita esses nomes para cadastro, mas a página `/admin.html` precisa de `SUPABASE_SERVICE_ROLE_KEY` para listar, excluir e gerenciar participantes com segurança.
 
